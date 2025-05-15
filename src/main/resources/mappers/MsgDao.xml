@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namespace填写的是Mapper接口的全限定名-->
+<mapper namespace="com.grapro.chat.dao.MsgDao">
+    <!--
+        id必须与接口的方法名一致
+        select语句会返回查询结果，所以需要配置一个resultType将查询结果赋值给对象的属性
+    -->
+    <insert id="saveMsg">
+        insert into msg(fromUser, toUser, fromUserName, txt, msgType, time, img_path)
+        values (#{fromUser}, #{toUser}, #{fromUserName}, #{txt}, #{msgType}, #{time}, #{img_path})
+    </insert>
+
+    <select id="getMsgs" resultType="com.grapro.chat.pojo.MsgBean">
+        select *
+        from msg
+        where msg.toUser = #{toUserId}
+        order by msg.id asc;
+    </select>
+
+    <delete id="deleteMsg">
+        delete
+        from msg
+        where id = #{id}
+    </delete>
+</mapper>
